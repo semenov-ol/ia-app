@@ -10,8 +10,9 @@ const Container = styled.div`
   margin: 3rem auto 6rem;
 `;
 
-const LngBtnContainer = styled.div`
-  float: right;
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
 `;
 
 const Main = styled.div`
@@ -22,7 +23,7 @@ const Main = styled.div`
 const Styled = {
   Title,
   Container,
-  LngBtnContainer,
+  ButtonContainer,
   Main,
 };
 

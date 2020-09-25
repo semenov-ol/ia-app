@@ -1,25 +1,23 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, {FC} from 'react';
 import Head from 'next/head';
-// @ts-ignore
-import { i18n, withTranslation } from '../i18n';
+import Button from 'ustudio-ui/components/Button';
+import { useTranslation } from '../i18n';
 import Styled from './index.styles';
-import Button from "ustudio-ui/components/Button";
 
-const Home = ({ t }) => {
+const Home: FC = () => {
+  const { t, i18n } = useTranslation('common');
 
-    const changeLanguage = (lng) => {
-        i18n.changeLanguage(lng);
-    };
   return (
     <Styled.Container>
       <Head>
         <title>I-A app</title>
       </Head>
-      <Styled.LngBtnContainer>
-        <Button onClick={() => changeLanguage('en')}>English</Button>
-        <Button onClick={() => changeLanguage('ua')}>Ukrainian</Button>
-      </Styled.LngBtnContainer>
+
+      <Styled.ButtonContainer>
+        <Button onClick={() => i18n.changeLanguage('en')} style={{'margin': '5px'}}>English</Button>
+        <Button onClick={() => i18n.changeLanguage('ua')} style={{'margin': '5px'}}>Ukrainian</Button>
+      </Styled.ButtonContainer>
+
       <p>
         <Styled.Title>{t('title')}</Styled.Title>
       </p>
@@ -28,12 +26,4 @@ const Home = ({ t }) => {
   );
 };
 
-Home.getInitialProps = async () => ({
-  namespacesRequired: ['common'],
-});
-
-Home.propTypes = {
-  t: PropTypes.func.isRequired,
-};
-
-export default withTranslation('common')(Home);
+export default Home;
