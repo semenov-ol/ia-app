@@ -1,6 +1,6 @@
 import React from 'react';
 import App from 'next/app';
-import type { AppProps, AppContext } from 'next/app';
+import type { AppProps, AppContext } from 'next/app'
 import { ThemeProvider } from 'ustudio-ui/theme';
 import { appWithTranslation } from '../i18n';
 

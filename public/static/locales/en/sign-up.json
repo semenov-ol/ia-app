@@ -1,0 +1,8 @@
+{
+  "registration": "Registration",
+  "authorization": "Authorization",
+  "email": "Email",
+  "password": "Password",
+  "confirm_password": "Confirm your password",
+  "confirm-message": "On your email was sent a message, please follow the link inside"
+}

@@ -1,4 +1,8 @@
 {
+  "main": "Main",
+  "sign-up": "Registration",
+  "sign-in": "Authorization",
+  "my-page": "My page",
   "title": "Welcome, this is main page",
   "main-info": "Main information"
 }

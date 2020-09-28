@@ -5,21 +5,21 @@ import Button from 'ustudio-ui/components/Button';
 import Styled from './header.styles';
 
 const Header: FC = () => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation('common');
   return (
     <Styled.HeaderContainer>
       <Styled.NavContainer>
         <Link href="/">
-          <a>Main</a>
+          <a>{t('main')}</a>
         </Link>
-        <Link href="/authorization/sign-up-page">
-          <a>Sign up</a>
+        <Link href="/sign-up">
+          <a>{t('sign-up')}</a>
         </Link>
-        <Link href={'/'}>
-          <a>Login</a>
+        <Link href='/sign-in'>
+          <a>{t('sign-in')}</a>
         </Link>
-        <Link href={'/'}>
-          <a>My Page</a>
+        <Link href={'/dashboard'}>
+          <a>{t('my-page')}</a>
         </Link>
       </Styled.NavContainer>
       <Styled.ButtonContainer>

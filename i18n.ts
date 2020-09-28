@@ -1,5 +1,6 @@
 import NextI18Next from 'next-i18next';
 import path from 'path';
+import { NextComponentType, NextPageContext } from 'next';
 
 const languages = ['en', 'ua'];
 
@@ -15,3 +16,9 @@ export const includeDefaultNamespaces = (namespaces: string[]) =>
   ['common', '_error'].concat(namespaces);
 
 export const { Trans, appWithTranslation, i18n } = nextI18next;
+
+export type I18nPage<P = Record<string, unknown>> = NextComponentType<
+  NextPageContext,
+  { namespacesRequired: string[] },
+  P & { namespacesRequired: string[] }
+>;
