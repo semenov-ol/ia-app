@@ -12,11 +12,11 @@ const Header: FC = () => {
         <Link href="/">
           <a>Main</a>
         </Link>
-        <Link href="/authorization/login-page">
-          <a>Login</a>
+        <Link href="/authorization/sign-up-page">
+          <a>Sign up</a>
         </Link>
         <Link href={'/'}>
-          <a>Sign in</a>
+          <a>Login</a>
         </Link>
         <Link href={'/'}>
           <a>My Page</a>

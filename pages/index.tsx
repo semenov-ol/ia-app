@@ -21,7 +21,7 @@ const Home: FC = () => {
           <Styled.Title>{t('title')}</Styled.Title>
         </p>
         <Styled.Main>{t('main-info')}</Styled.Main>
-        <Link href="/authorization/login-page">
+        <Link href="/authorization/sign-up-page">
           <a href="#">
             <Text variant="body">Login page </Text>{' '}
           </a>

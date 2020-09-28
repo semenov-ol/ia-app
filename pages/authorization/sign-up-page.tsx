@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import TextInput from 'ustudio-ui/components/Input/TextInput';
 import Button from 'ustudio-ui/components/Button';
-import Styled from './login-page.styles';
+import Styled from './sign-up-page.styles';
 
 import Header from '../../components/header';
 
-const LoginPage: FC = () => {
+const SignUpPage: FC = () => {
   return (
     <>
       <Header />
@@ -18,4 +18,4 @@ const LoginPage: FC = () => {
   );
 };
 
-export default LoginPage;
+export default SignUpPage;
