@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import TextInput from 'ustudio-ui/components/Input/TextInput';
 import Text from 'ustudio-ui/components/Text';
@@ -15,9 +15,17 @@ const Index: FC = () => {
   const [password, setPassword] = useState('');
   const [confirmedPassword, setConfirmedPassword] = useState('');
   const [confirmMessage, setConfirmMessage] = useState(false);
-  const [isLoggedIn] = useState(!!token);
+  const [isLoggedIn, setIsLoggedIn] = useState(undefined);
   const { t } = useTranslation('sign-up');
   const serverUrl = 'http://185.25.116.133:5888';
+
+  useEffect(() => {
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  });
 
   const isSignUpDisabled = (): boolean => {
     return !(email !== '' && password !== '' && password === confirmedPassword);
@@ -38,9 +46,9 @@ const Index: FC = () => {
   return (
     <>
       <Header />
-      {isLoggedIn ? (
+      {isLoggedIn === undefined ? null : isLoggedIn ? (
         <Styled.FormContainer>
-          <Text variant="h5">You are logged in</Text>
+          <Text variant="h5">{t('user-logged-in')}</Text>
         </Styled.FormContainer>
       ) : (
         <Styled.FormContainer>

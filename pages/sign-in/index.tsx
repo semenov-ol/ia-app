@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import TextInput from 'ustudio-ui/components/Input/TextInput';
 import Button from 'ustudio-ui/components/Button';
 import Text from 'ustudio-ui/components/Text';
@@ -10,14 +10,22 @@ import Header from '../../components/header';
 
 const Index: FC = () => {
   const token = Cookies.get('token');
-
+  const [isLoggedIn, setIsLoggedIn] = useState(undefined);
   const { t } = useTranslation('sign-up');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(!!token);
   const serverUrl = 'http://185.25.116.133:5888';
 
-  const onSignInClick = async (): Promise<void> => {
+  useEffect(() => {
+    if (token) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [token]);
+
+  const onSignInClick = async (e): Promise<void> => {
+    e.preventDefault();
     const response = await fetch(`${serverUrl}/auth/signin`, {
       method: 'POST',
       headers: {
@@ -46,31 +54,33 @@ const Index: FC = () => {
   return (
     <>
       <Header />
-      {isLoggedIn ? (
+      {isLoggedIn === undefined ? null : isLoggedIn ? (
         <Styled.FormContainer>
-          <Text variant="h4">Your are logged in</Text>
+          <Text variant="h4">{t('user-logged-in')}</Text>
           <Button onClick={() => onLoggedOutClick()}>Logged out</Button>
         </Styled.FormContainer>
       ) : (
         <Styled.FormContainer>
-          <Text variant="h3">{t('authorization')}</Text>
-          {t('email')}
-          <TextInput
-            name="email"
-            placeholder="Enter email"
-            // @ts-ignore
-            type="email"
-            onChange={(value) => setEmail(value)}
-          />
-          {t('password')}
-          <TextInput
-            name="password"
-            placeholder="Enter password"
-            // @ts-ignore
-            type="password"
-            onChange={(value) => setPassword(value)}
-          />
-          <Button onClick={() => onSignInClick()}>Sign in</Button>
+          <form onSubmit={(e) => onSignInClick(e)}>
+            <Text variant="h3">{t('authorization')}</Text>
+            {t('email')}
+            <TextInput
+              name="email"
+              placeholder="Enter email"
+              // @ts-ignore
+              type="email"
+              onChange={(value) => setEmail(value)}
+            />
+            {t('password')}
+            <TextInput
+              name="password"
+              placeholder="Enter password"
+              // @ts-ignore
+              type="password"
+              onChange={(value) => setPassword(value)}
+            />
+            <Button>Sign in</Button>
+          </form>
         </Styled.FormContainer>
       )}
     </>

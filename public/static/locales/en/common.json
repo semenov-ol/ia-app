@@ -4,5 +4,7 @@
   "sign-in": "Authorization",
   "my-page": "My page",
   "title": "Welcome, this is main page",
-  "main-info": "Main information"
+  "main-info": "Main information",
+  "en-lng": "English",
+  "ua-lng": "Ukrainian"
 }

@@ -15,7 +15,7 @@ const Header: FC = () => {
         <Link href="/sign-up">
           <a>{t('sign-up')}</a>
         </Link>
-        <Link href='/sign-in'>
+        <Link href="/sign-in">
           <a>{t('sign-in')}</a>
         </Link>
         <Link href={'/dashboard'}>
@@ -27,13 +27,13 @@ const Header: FC = () => {
           onClick={() => i18n.changeLanguage('en')}
           style={{ margin: '5px' }}
         >
-          English
+          {t('en-lng')}
         </Button>
         <Button
           onClick={() => i18n.changeLanguage('ua')}
           style={{ margin: '5px' }}
         >
-          Ukrainian
+          {t('ua-lng')}
         </Button>
       </Styled.ButtonContainer>
     </Styled.HeaderContainer>

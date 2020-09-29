@@ -4,5 +4,6 @@
   "email": "Email",
   "password": "Password",
   "confirm_password": "Confirm your password",
-  "confirm-message": "On your email was sent a message, please follow the link inside"
+  "confirm-message": "On your email was sent a message, please follow the link inside",
+  "user-logged-in": "Your are logged in"
 }

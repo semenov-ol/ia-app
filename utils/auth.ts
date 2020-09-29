@@ -4,19 +4,18 @@ import Cookies from 'js-cookie';
 const serverUrl = 'http://185.25.116.133:5888';
 
 const handleAuthSSR = async (ctx) => {
-  const userId = Cookies.get('userId');
-  const refreshToken = Cookies.get('refreshToken');
+  const token = Cookies.get('token');
 
   try {
-    const response = await fetch(`${serverUrl}/auth/refresh`, {
-      method: 'POST',
+    const response = await fetch(`${serverUrl}/users/secret`, {
+      method: 'GET',
       headers: {
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
         Connection: 'keep-alive',
       },
-      body: JSON.stringify({ userId, refreshToken }),
     });
-    if (response && response.status !== 201) {
+    if (response && response.status !== 200) {
       throw new Error('Bad Request');
     }
   } catch (err) {
