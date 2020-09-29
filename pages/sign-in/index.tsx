@@ -1,20 +1,23 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import TextInput from 'ustudio-ui/components/Input/TextInput';
 import Button from 'ustudio-ui/components/Button';
 import Text from 'ustudio-ui/components/Text';
-import Header from '../../components/header';
-import Styled from './sign-in-pages.styles';
 import { useTranslation } from 'react-i18next';
-import { useRouter } from 'next/router';
+import Cookies from 'js-cookie';
+import Styled from './sign-in-pages.styles';
 
-const Index = () => {
+import Header from '../../components/header';
+
+const Index: FC = () => {
+  const token = Cookies.get('token');
+
   const { t } = useTranslation('sign-up');
-  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(!!token);
   const serverUrl = 'http://185.25.116.133:5888';
 
-  const onSignInClick = async () => {
+  const onSignInClick = async (): void => {
     const response = await fetch(`${serverUrl}/auth/signin`, {
       method: 'POST',
       headers: {
@@ -26,33 +29,45 @@ const Index = () => {
     const json = await response.json();
     const { userId, accessToken } = json;
     document.cookie = `token=${accessToken}; path=/`;
-    document.cookie = `userId=${userId}`
+    document.cookie = `userId=${userId}`;
     if (response.ok) {
-      await router.push('/');
+      setIsLoggedIn(true);
     }
+  };
+
+  const onLoggedOutClick = (): void => {
+    Cookies.remove('token');
+    setIsLoggedIn(false);
   };
 
   return (
     <>
       <Header />
-      <Styled.FormContainer>
-        <Text variant="h3">{t('authorization')}</Text>
-        {t('email')}
-        <TextInput
-          name="email"
-          placeholder="Enter email"
-          type="email"
-          onChange={(e) => setEmail(e)}
-        />
-        {t('password')}
-        <TextInput
-          name="password"
-          placeholder="Enter password"
-          type="password"
-          onChange={(e) => setPassword(e)}
-        />
-        <Button onClick={() => onSignInClick()}>Sign in</Button>
-      </Styled.FormContainer>
+      {isLoggedIn ? (
+        <Styled.FormContainer>
+          <Text variant="h4">Your are logged in</Text>
+          <Button onClick={() => onLoggedOutClick()}>Logged out</Button>
+        </Styled.FormContainer>
+      ) : (
+        <Styled.FormContainer>
+          <Text variant="h3">{t('authorization')}</Text>
+          {t('email')}
+          <TextInput
+            name="email"
+            placeholder="Enter email"
+            type="email"
+            onChange={(value) => setEmail(value)}
+          />
+          {t('password')}
+          <TextInput
+            name="password"
+            placeholder="Enter password"
+            type="password"
+            onChange={(value) => setPassword(value)}
+          />
+          <Button onClick={() => onSignInClick()}>Sign in</Button>
+        </Styled.FormContainer>
+      )}
     </>
   );
 };
