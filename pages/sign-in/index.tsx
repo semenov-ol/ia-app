@@ -17,7 +17,7 @@ const Index: FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!token);
   const serverUrl = 'http://185.25.116.133:5888';
 
-  const onSignInClick = async (): void => {
+  const onSignInClick = async (): Promise<void> => {
     const response = await fetch(`${serverUrl}/auth/signin`, {
       method: 'POST',
       headers: {
@@ -27,9 +27,10 @@ const Index: FC = () => {
       body: JSON.stringify({ email, password }),
     });
     const json = await response.json();
-    const { userId, accessToken } = json;
-    document.cookie = `token=${accessToken}; path=/`;
-    document.cookie = `userId=${userId}`;
+    const { userId, accessToken, refreshToken } = json;
+    Cookies.set('token', accessToken, { path: '/' });
+    Cookies.set('refreshToken', refreshToken);
+    Cookies.set('userId', userId);
     if (response.ok) {
       setIsLoggedIn(true);
     }
@@ -37,6 +38,8 @@ const Index: FC = () => {
 
   const onLoggedOutClick = (): void => {
     Cookies.remove('token');
+    Cookies.remove('refreshToken');
+    Cookies.remove('userId');
     setIsLoggedIn(false);
   };
 
@@ -55,6 +58,7 @@ const Index: FC = () => {
           <TextInput
             name="email"
             placeholder="Enter email"
+            // @ts-ignore
             type="email"
             onChange={(value) => setEmail(value)}
           />
@@ -62,6 +66,7 @@ const Index: FC = () => {
           <TextInput
             name="password"
             placeholder="Enter password"
+            // @ts-ignore
             type="password"
             onChange={(value) => setPassword(value)}
           />
