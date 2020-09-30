@@ -23,7 +23,7 @@ const Input = styled(TextInput)`
 const SignInButton = styled(Button)`
   width: 100%;
   margin-top: 10px;
-  
+
   text-transform: uppercase;
 `;
 
@@ -31,7 +31,12 @@ const ErrorContainer = styled.div`
   display: flex;
   justify-content: center;
   background-color: #ff973c;
-`
+`;
+
+const ForgotLink = styled.a`
+  font-size: 12px;
+  cursor: pointer;
+`;
 
 const Styled = {
   FormContainer,
@@ -39,6 +44,7 @@ const Styled = {
   Input,
   SignInButton,
   Title,
+  ForgotLink,
 };
 
 export default Styled;

@@ -14,13 +14,18 @@ const Indexes = () => {
           method: 'GET',
         }
       );
+      console.log(response)
       if (response.status !== 200) {
         console.log('ERROR');
       } else {
         await Router.push('/');
       }
     }
-    fetchData();
+    try {
+      fetchData();
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
 
   return <Text variant="h2">You will be redirect to the main page</Text>;

@@ -1,10 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
-import TextInput from 'ustudio-ui/components/Input/TextInput';
 import Button from 'ustudio-ui/components/Button';
 import Text from 'ustudio-ui/components/Text';
 import { useTranslation } from 'react-i18next';
 import Cookies from 'js-cookie';
 import Styled from './sign-in-pages.styles';
+import Link from 'next/link';
 
 import Header from '../../components/header';
 
@@ -15,6 +15,7 @@ const Index: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isError, setIsError] = useState(false);
+  const [isUserNotExist, setIsUserNotExist] = useState(false);
   const serverUrl = 'http://185.25.116.133:5888';
 
   useEffect(() => {
@@ -38,12 +39,14 @@ const Index: FC = () => {
       });
       const json = await response.json();
       const { userId, accessToken, refreshToken } = json;
-      Cookies.set('token', accessToken, { path: '/' });
-      Cookies.set('refreshToken', refreshToken);
-      Cookies.set('userId', userId);
-      if (response.ok) {
+      if (response && response.status === 200) {
+        Cookies.set('token', accessToken, { path: '/' });
+        Cookies.set('refreshToken', refreshToken);
+        Cookies.set('userId', userId);
         setIsLoggedIn(true);
         setIsError(false);
+      } else {
+        setIsUserNotExist(true)
       }
     } catch (err) {
       setIsError(true);
@@ -60,20 +63,31 @@ const Index: FC = () => {
   return (
     <>
       <Header />
-      {isError ? (
+      {isUserNotExist && (
         <Styled.ErrorContainer>
-          <Text variant="code">{t('_error:something-wrong')}</Text>
+          <Text variant="article">
+            This email is not exist, please make <Link href='/sign-up'><a>registration</a></Link>
+          </Text>
         </Styled.ErrorContainer>
-      ) : null}
+      )}
+      {isError && (
+        <Styled.ErrorContainer>
+          <Text variant="article">{t('_error:something-wrong')}</Text>
+        </Styled.ErrorContainer>
+      )}
       {isLoggedIn === undefined ? null : isLoggedIn ? (
         <Styled.FormContainer>
-          <Styled.Title variant="h4" align="center">{t('user-logged-in')}</Styled.Title>
+          <Styled.Title variant="h4" align="center">
+            {t('user-logged-in')}
+          </Styled.Title>
           <Button onClick={() => onLoggedOutClick()}>Logged out</Button>
         </Styled.FormContainer>
       ) : (
         <Styled.FormContainer>
           <form onSubmit={(e) => onSignInClick(e)}>
-            <Styled.Title variant="h3" align="center">{t('authorization')}</Styled.Title>
+            <Styled.Title variant="h3" align="center">
+              {t('authorization')}
+            </Styled.Title>
             {t('email')}
             <Styled.Input
               name="email"
@@ -90,7 +104,8 @@ const Index: FC = () => {
               type="password"
               onChange={(value) => setPassword(value)}
             />
-            <Styled.SignInButton>Sign in</Styled.SignInButton>
+            <Styled.ForgotLink href='/auth/forgot-password'>{t('forgot-password')}</Styled.ForgotLink>
+            <Styled.SignInButton>{t('sign-in')}</Styled.SignInButton>
           </form>
         </Styled.FormContainer>
       )}

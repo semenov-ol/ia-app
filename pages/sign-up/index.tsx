@@ -17,6 +17,7 @@ const Index: FC = () => {
   const [confirmMessage, setConfirmMessage] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(undefined);
   const [isError, setIsError] = useState(false);
+  const [errorText, setErrorText] = useState('');
   const { t } = useTranslation('sign-up');
   const serverUrl = 'http://185.25.116.133:5888';
 
@@ -32,7 +33,8 @@ const Index: FC = () => {
     return !(email !== '' && password !== '' && password === confirmedPassword);
   };
 
-  const onSignUpClick = async (): Promise<void> => {
+  const onSignUpClick = async (e): Promise<void> => {
+    e.preventDefault();
     try {
       const response = await fetch(`${serverUrl}/auth/signup`, {
         method: 'POST',
@@ -44,8 +46,12 @@ const Index: FC = () => {
       if (response.status === 201) {
         setConfirmMessage(true);
         setIsError(false);
+      } else {
+        setErrorText(response.statusText);
+        setIsError(true);
       }
     } catch (err) {
+      setErrorText(err.statusText);
       setIsError(true);
     }
   };
@@ -54,48 +60,55 @@ const Index: FC = () => {
       <Header />
       {isError ? (
         <Styled.ErrorContainer>
-          <Text variant="code">{t('_error:something-wrong')}</Text>
+          <Text variant="code">
+            {t('_error:something-wrong')} {errorText}
+          </Text>
         </Styled.ErrorContainer>
       ) : null}
       {isLoggedIn === undefined ? null : isLoggedIn ? (
         <Styled.FormContainer>
-          <Text variant="h5" align="center">{t('user-logged-in')}</Text>
+          <Text variant="h5" align="center">
+            {t('user-logged-in')}
+          </Text>
         </Styled.FormContainer>
       ) : (
         <Styled.FormContainer>
-          <Styled.Title variant="h3" align="center">{t('registration')}</Styled.Title>
-          {t('email')}
-          <Styled.Input
-            name="email"
-            placeholder="Enter email"
-            // @ts-ignore
-            type="email"
-            onChange={(value) => setEmail(value)}
-          />
-          {t('password')}
-          <Styled.Input
-            name="password"
-            placeholder="Enter password"
-            // @ts-ignore
-            type="password"
-            onChange={(value) => setPassword(value)}
-          />
-          {t('confirm_password')}
-          <TextInput
-            name="confirm_password"
-            placeholder="Confirm password"
-            // @ts-ignore
-            type="password"
-            onChange={(value) => setConfirmedPassword(value)}
-          />
-          <Styled.SignUpButton
-            onClick={() => onSignUpClick()}
-            isDisabled={isSignUpDisabled()}
-          >
-            Sign up
-          </Styled.SignUpButton>
+          <form onSubmit={(e) => onSignUpClick(e)}>
+            <Styled.Title variant="h3" align="center">
+              {t('registration')}
+            </Styled.Title>
+            {t('email')}
+            <Styled.Input
+              name="email"
+              placeholder="Enter email"
+              // @ts-ignore
+              type="email"
+              onChange={(value) => setEmail(value)}
+            />
+            {t('password')}
+            <Styled.Input
+              name="password"
+              placeholder="Enter password"
+              // @ts-ignore
+              type="password"
+              onChange={(value) => setPassword(value)}
+            />
+            {t('confirm_password')}
+            <TextInput
+              name="confirm_password"
+              placeholder="Confirm password"
+              // @ts-ignore
+              type="password"
+              onChange={(value) => setConfirmedPassword(value)}
+            />
+            <Styled.SignUpButton isDisabled={isSignUpDisabled()}>
+              {t('sign-up')}
+            </Styled.SignUpButton>
+          </form>
           {confirmMessage ? (
-            <Styled.ConfirmText variant="h6">{t('confirm-message')}</Styled.ConfirmText>
+            <Styled.ConfirmText variant="h6">
+              {t('confirm-message')}
+            </Styled.ConfirmText>
           ) : null}
         </Styled.FormContainer>
       )}

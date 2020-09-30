@@ -25,6 +25,7 @@ const Input = styled(TextInput)`
 `;
 
 const SignUpButton = styled(Button)`
+  width: 100%;
   margin-top: 20px;
 `;
 
@@ -34,12 +35,17 @@ const ErrorContainer = styled.div`
   background-color: #ff973c;
 `;
 
+const ConfirmText = styled(Text)`
+  color: #3290f3;
+`;
+
 const Styled = {
   FormContainer,
   ErrorContainer,
   Title,
   Input,
   SignUpButton,
+  ConfirmText,
 };
 
 export default Styled;
