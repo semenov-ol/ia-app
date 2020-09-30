@@ -3,19 +3,16 @@ import { useTranslation } from 'react-i18next';
 import Button from 'ustudio-ui/components/Button';
 import Text from 'ustudio-ui/components/Text';
 import Cookies from 'js-cookie';
-import Link from 'next/link';
-
 import type { NextPage } from 'next';
 
 import Header from '../../components/header';
-
 import Styled from './sign-in-pages.styles';
 
 const Index: NextPage = () => {
   const serverUrl = 'http://185.25.116.133:5888';
 
   const token = Cookies.get('token');
-  const { t } = useTranslation(['sign-up', 'common']);
+  const { t } = useTranslation(['sign-up', 'common', '_error']);
 
   const [isLoggedIn, setIsLoggedIn] = useState(undefined);
   const [email, setEmail] = useState('');
@@ -112,12 +109,7 @@ const Index: NextPage = () => {
       <Header />
       {isUserNotExist && (
         <Styled.ErrorContainer>
-          <Text variant="article">
-            This email do not exist, please make{' '}
-            <Link href="/sign-up">
-              <a href="/sign-up">registration</a>
-            </Link>
-          </Text>
+          <Text variant="article">{t('_error:email-password-incorrect')}</Text>
         </Styled.ErrorContainer>
       )}
       {isError && (

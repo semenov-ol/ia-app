@@ -8,5 +8,7 @@
   "user-logged-in": "Your are logged in",
   "forgot-password": "Forgot password",
   "sign-up": "Sign up",
-  "sign-in": "Sign in"
+  "sign-in": "Sign in",
+  "new-password": "New Password:",
+  "confirm": "Confirm"
 }

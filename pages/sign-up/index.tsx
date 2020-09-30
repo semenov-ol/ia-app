@@ -58,6 +58,11 @@ const Index: NextPage = () => {
       if (response.status === 201) {
         setConfirmMessage(true);
         setIsError(false);
+        (document.getElementById('email') as HTMLInputElement).value = '';
+        (document.getElementById('password') as HTMLInputElement).value = '';
+        (document.getElementById(
+          'confirm_password'
+        ) as HTMLInputElement).value = '';
       } else {
         setErrorText(response.statusText);
         setIsError(true);
@@ -88,13 +93,12 @@ const Index: NextPage = () => {
       ) : (
         <Styled.FormContainer>
           <form onSubmit={(e) => onSignUpClick(e)}>
-
             <Styled.Title variant="h3" align="center">
               {t('registration')}
             </Styled.Title>
             {t('email')}
             <Styled.Input
-              name="email"
+              id="email"
               placeholder="Enter email"
               // @ts-ignore
               type="email"
@@ -102,7 +106,7 @@ const Index: NextPage = () => {
             />
             {t('password')}
             <Styled.Input
-              name="password"
+              id="password"
               placeholder="Enter password"
               // @ts-ignore
               type="password"
@@ -111,7 +115,7 @@ const Index: NextPage = () => {
             {t('confirm_password')}
             <Styled.InputContainer>
               <TextInput
-                name="confirm_password"
+                id="confirm_password"
                 placeholder="Confirm password"
                 // @ts-ignore
                 type="password"
@@ -126,7 +130,6 @@ const Index: NextPage = () => {
             <Styled.SignUpButton isDisabled={isSignUpDisabled()}>
               {t('sign-up')}
             </Styled.SignUpButton>
-
           </form>
           {confirmMessage ? (
             <Styled.ConfirmText variant="h6">
