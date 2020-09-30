@@ -16,11 +16,11 @@ const Indexes: NextPage = () => {
           method: 'GET',
         }
       );
-      console.log(response)
+      console.log(response);
       if (response.status !== 200) {
         console.log('ERROR');
       } else {
-        await Router.push('/');
+        await Router.push('/sign-in');
       }
     }
 
@@ -33,7 +33,7 @@ const Indexes: NextPage = () => {
 
   return (
     <Text variant="h2" align="center">
-      You will be redirect to the main page
+      You will be redirect to the authorization page
     </Text>
   );
 };

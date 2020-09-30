@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import { NextPage } from 'next';
 import Text from 'ustudio-ui/components/Text';
 import Styled from './styles';
@@ -7,6 +7,8 @@ import Header from '../../components/header';
 
 const ChangePassword: NextPage = () => {
   const serverUrl = 'http://185.25.116.133:5888';
+  const router = useRouter();
+  const { token } = router?.query;
 
   const [password, setPassword] = useState('');
   const [confirmedPassword, setConfirmedPassword] = useState('');
@@ -19,13 +21,14 @@ const ChangePassword: NextPage = () => {
       const response = await fetch(`${serverUrl}/auth/change-password`, {
         method: 'PATCH',
         headers: {
+          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
           Connection: 'keep-alive',
         },
         body: JSON.stringify({ password }),
       });
       if (response && response.status === 200) {
-        await Router.push('/sign-in');
+        await router.push('/sign-in');
       } else {
         setIsError(true);
         setErrorMessage(response.statusText);

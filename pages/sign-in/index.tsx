@@ -43,7 +43,7 @@ const Index: NextPage = () => {
       });
       const json = await response.json();
       const { userId, accessToken, refreshToken } = json;
-      if (response && response.status === 200) {
+      if (response && (response.status === 200 || response.status === 201)) {
         Cookies.set('token', accessToken, { path: '/' });
         Cookies.set('refreshToken', refreshToken);
         Cookies.set('userId', userId);
