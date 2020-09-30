@@ -52,7 +52,7 @@ const Index: FC = () => {
         </Styled.FormContainer>
       ) : (
         <Styled.FormContainer>
-          <Styled.Title variant="h3">{t('registration')}</Styled.Title>
+          <Styled.Title variant="h3" align="center">{t('registration')}</Styled.Title>
           {t('email')}
           <Styled.Input
             name="email"
