@@ -27,8 +27,15 @@ const SignInButton = styled(Button)`
   text-transform: uppercase;
 `;
 
+const ErrorContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  background-color: #ff973c;
+`
+
 const Styled = {
   FormContainer,
+  ErrorContainer,
   Input,
   SignInButton,
   Title,
