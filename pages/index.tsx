@@ -24,9 +24,9 @@ const Home: I18nPage = () => {
       <Styled.Container>
         <Styled.Title>{t('title')}</Styled.Title>
         <Styled.Main>{t('main-info')}</Styled.Main>
-        <Link href='/sign-up'>
-          <a href='/sign-up'>
-            {loggedIn ? null : <Text variant='body'>Sign-up page </Text>}
+        <Link href="/sign-up">
+          <a href="/sign-up">
+            {loggedIn ? null : <Text variant="body">{t('sign-up')}</Text>}
           </a>
         </Link>
       </Styled.Container>

@@ -12,14 +12,16 @@ import Header from '../../components/header';
 import Styled from './sign-in-pages.styles';
 
 const Index: NextPage = () => {
+  const serverUrl = 'http://185.25.116.133:5888';
+
   const token = Cookies.get('token');
+  const { t } = useTranslation(['sign-up', 'common']);
+
   const [isLoggedIn, setIsLoggedIn] = useState(undefined);
-  const { t } = useTranslation('sign-up');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isError, setIsError] = useState(false);
   const [isUserNotExist, setIsUserNotExist] = useState(false);
-  const serverUrl = 'http://185.25.116.133:5888';
 
   useEffect(() => {
     if (token) {
@@ -64,6 +66,47 @@ const Index: NextPage = () => {
     setIsLoggedIn(false);
   };
 
+  const isShowAuth = () => {
+    return isLoggedIn ? (
+      <Styled.FormContainer>
+        <Styled.Title variant="h4" align="center">
+          {t('user-logged-in')}
+        </Styled.Title>
+        <Button onClick={() => onLoggedOutClick()}>
+          {t('common:log-out')}
+        </Button>
+      </Styled.FormContainer>
+    ) : (
+      <Styled.FormContainer>
+        <form onSubmit={(e: FormEvent<HTMLFormElement>) => onSignInClick(e)}>
+          <Styled.Title variant="h3" align="center">
+            {t('authorization')}
+          </Styled.Title>
+          {t('email')}
+          <Styled.Input
+            name="email"
+            placeholder="Enter email"
+            // @ts-ignore
+            type="email"
+            onChange={(value) => setEmail(value)}
+          />
+          {t('password')}
+          <Styled.Input
+            name="password"
+            placeholder="Enter password"
+            // @ts-ignore
+            type="password"
+            onChange={(value) => setPassword(value)}
+          />
+          <Styled.ForgotLink href="/auth/forgot-password">
+            {t('forgot-password')}
+          </Styled.ForgotLink>
+          <Styled.SignInButton>{t('sign-in')}</Styled.SignInButton>
+        </form>
+      </Styled.FormContainer>
+    );
+  };
+
   return (
     <>
       <Header />
@@ -82,42 +125,7 @@ const Index: NextPage = () => {
           <Text variant="article">{t('_error:something-wrong')}</Text>
         </Styled.ErrorContainer>
       )}
-      {isLoggedIn === undefined ? null : isLoggedIn ? (
-        <Styled.FormContainer>
-          <Styled.Title variant="h4" align="center">
-            {t('user-logged-in')}
-          </Styled.Title>
-          <Button onClick={() => onLoggedOutClick()}>Logged out</Button>
-        </Styled.FormContainer>
-      ) : (
-        <Styled.FormContainer>
-          <form onSubmit={(e: FormEvent<HTMLFormElement>) => onSignInClick(e)}>
-            <Styled.Title variant="h3" align="center">
-              {t('authorization')}
-            </Styled.Title>
-            {t('email')}
-            <Styled.Input
-              name="email"
-              placeholder="Enter email"
-              // @ts-ignore
-              type="email"
-              onChange={(value) => setEmail(value)}
-            />
-            {t('password')}
-            <Styled.Input
-              name="password"
-              placeholder="Enter password"
-              // @ts-ignore
-              type="password"
-              onChange={(value) => setPassword(value)}
-            />
-            <Styled.ForgotLink href="/auth/forgot-password">
-              {t('forgot-password')}
-            </Styled.ForgotLink>
-            <Styled.SignInButton>{t('sign-in')}</Styled.SignInButton>
-          </form>
-        </Styled.FormContainer>
-      )}
+      {isLoggedIn === undefined ? null : isShowAuth()}
     </>
   );
 };
