@@ -1,14 +1,16 @@
-import React, { FC, useEffect, useState } from 'react';
-import TextInput from 'ustudio-ui/components/Input/TextInput';
+import React, { FormEvent, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Button from 'ustudio-ui/components/Button';
 import Text from 'ustudio-ui/components/Text';
-import { useTranslation } from 'react-i18next';
 import Cookies from 'js-cookie';
-import Styled from './sign-in-pages.styles';
+
+import type { NextPage } from 'next';
 
 import Header from '../../components/header';
 
-const Index: FC = () => {
+import Styled from './sign-in-pages.styles';
+
+const Index: NextPage = () => {
   const token = Cookies.get('token');
   const [isLoggedIn, setIsLoggedIn] = useState(undefined);
   const { t } = useTranslation('sign-up');
@@ -27,6 +29,7 @@ const Index: FC = () => {
 
   const onSignInClick = async (e): Promise<void> => {
     e.preventDefault();
+
     try {
       const response = await fetch(`${serverUrl}/auth/signin`, {
         method: 'POST',
@@ -67,13 +70,17 @@ const Index: FC = () => {
       ) : null}
       {isLoggedIn === undefined ? null : isLoggedIn ? (
         <Styled.FormContainer>
-          <Styled.Title variant="h4" align="center">{t('user-logged-in')}</Styled.Title>
+          <Styled.Title variant="h4" align="center">
+            {t('user-logged-in')}
+          </Styled.Title>
           <Button onClick={() => onLoggedOutClick()}>Logged out</Button>
         </Styled.FormContainer>
       ) : (
         <Styled.FormContainer>
-          <form onSubmit={(e) => onSignInClick(e)}>
-            <Styled.Title variant="h3" align="center">{t('authorization')}</Styled.Title>
+          <form onSubmit={(e: FormEvent<HTMLFormElement>) => onSignInClick(e)}>
+            <Styled.Title variant="h3" align="center">
+              {t('authorization')}
+            </Styled.Title>
             {t('email')}
             <Styled.Input
               name="email"

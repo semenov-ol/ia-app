@@ -1,9 +1,10 @@
 import Router from 'next/router';
 import Cookies from 'js-cookie';
+import { NextPageContext } from 'next';
 
 const serverUrl = 'http://185.25.116.133:5888';
 
-const handleAuthSSR = async (ctx) => {
+const handleAuthSSR = async (ctx: NextPageContext): Promise<void> => {
   const token = Cookies.get('token');
 
   try {
