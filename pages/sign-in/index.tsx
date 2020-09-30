@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Button from 'ustudio-ui/components/Button';
 import Text from 'ustudio-ui/components/Text';
 import Cookies from 'js-cookie';
+import Link from 'next/link';
 
 import type { NextPage } from 'next';
 
@@ -49,7 +50,7 @@ const Index: NextPage = () => {
         setIsLoggedIn(true);
         setIsError(false);
       } else {
-        setIsUserNotExist(true)
+        setIsUserNotExist(true);
       }
     } catch (err) {
       setIsError(true);
@@ -69,7 +70,10 @@ const Index: NextPage = () => {
       {isUserNotExist && (
         <Styled.ErrorContainer>
           <Text variant="article">
-            This email is not exist, please make <Link href='/sign-up'><a>registration</a></Link>
+            This email is not exist, please make{' '}
+            <Link href="/sign-up">
+              <a href="/sign-up">registration</a>
+            </Link>
           </Text>
         </Styled.ErrorContainer>
       )}
@@ -107,7 +111,9 @@ const Index: NextPage = () => {
               type="password"
               onChange={(value) => setPassword(value)}
             />
-            <Styled.ForgotLink href='/auth/forgot-password'>{t('forgot-password')}</Styled.ForgotLink>
+            <Styled.ForgotLink href="/auth/forgot-password">
+              {t('forgot-password')}
+            </Styled.ForgotLink>
             <Styled.SignInButton>{t('sign-in')}</Styled.SignInButton>
           </form>
         </Styled.FormContainer>
