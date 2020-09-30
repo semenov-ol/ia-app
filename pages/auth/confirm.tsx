@@ -16,6 +16,7 @@ const Indexes: NextPage = () => {
           method: 'GET',
         }
       );
+      console.log(response)
       if (response.status !== 200) {
         console.log('ERROR');
       } else {
@@ -23,7 +24,11 @@ const Indexes: NextPage = () => {
       }
     }
 
-    fetchData();
+    try {
+      fetchData();
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
 
   return (
