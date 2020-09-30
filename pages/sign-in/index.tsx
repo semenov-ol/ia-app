@@ -113,7 +113,7 @@ const Index: NextPage = () => {
       {isUserNotExist && (
         <Styled.ErrorContainer>
           <Text variant="article">
-            This email is not exist, please make{' '}
+            This email do not exist, please make{' '}
             <Link href="/sign-up">
               <a href="/sign-up">registration</a>
             </Link>

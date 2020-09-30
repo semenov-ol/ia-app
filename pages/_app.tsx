@@ -12,7 +12,9 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   );
 };
 
-MyApp.getInitialProps = async (appContext: AppContext): Promise<AppInitialProps> => ({
+MyApp.getInitialProps = async (
+  appContext: AppContext
+): Promise<AppInitialProps> => ({
   ...(await App.getInitialProps(appContext)),
 });
 

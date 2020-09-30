@@ -33,7 +33,7 @@ const Indexes: NextPage = () => {
 
   return (
     <Text variant="h2" align="center">
-      You will be redirect to the authorization page
+      You will be redirected to the authorization page
     </Text>
   );
 };
