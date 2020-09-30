@@ -1,4 +1,5 @@
 {
   "error": "Error",
-  "something-wrong": "Something goes wrong :("
+  "something-wrong": "Something goes wrong :(",
+  "email-password-incorrect": "Email or Password are incorrect"
 }

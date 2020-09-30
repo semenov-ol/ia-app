@@ -1,4 +1,6 @@
 {
   "error": "Помилка",
-  "something-wrong": "Щось пішло не так :("
+  "something-wrong": "Щось пішло не так :(",
+  "email-password-incorrect": "Електронна адреса або пароль неправильні"
+
 }
