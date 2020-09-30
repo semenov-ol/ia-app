@@ -16,6 +16,7 @@ const Index: FC = () => {
   const [confirmedPassword, setConfirmedPassword] = useState('');
   const [confirmMessage, setConfirmMessage] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(undefined);
+  const [isError, setIsError] = useState(false);
   const { t } = useTranslation('sign-up');
   const serverUrl = 'http://185.25.116.133:5888';
 
@@ -32,20 +33,30 @@ const Index: FC = () => {
   };
 
   const onSignUpClick = async (): Promise<void> => {
-    const response = await fetch(`${serverUrl}/auth/signup`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ email, password }),
-    });
-    if (response.status === 201) {
-      setConfirmMessage(true);
+    try {
+      const response = await fetch(`${serverUrl}/auth/signup`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      if (response.status === 201) {
+        setConfirmMessage(true);
+        setIsError(false);
+      }
+    } catch (err) {
+      setIsError(true);
     }
   };
   return (
     <>
       <Header />
+      {isError ? (
+        <Styled.ErrorContainer>
+          <Text variant="code">{t('_error:something-wrong')}</Text>
+        </Styled.ErrorContainer>
+      ) : null}
       {isLoggedIn === undefined ? null : isLoggedIn ? (
         <Styled.FormContainer>
           <Text variant="h5">{t('user-logged-in')}</Text>

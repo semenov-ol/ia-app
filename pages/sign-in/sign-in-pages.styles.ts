@@ -11,8 +11,15 @@ const FormContainer = styled.div`
   height: 30%;
 `;
 
+const ErrorContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  background-color: #ff973c;
+`
+
 const Styled = {
   FormContainer,
+  ErrorContainer
 };
 
 export default Styled;

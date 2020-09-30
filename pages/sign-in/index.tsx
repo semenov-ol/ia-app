@@ -14,6 +14,7 @@ const Index: FC = () => {
   const { t } = useTranslation('sign-up');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isError, setIsError] = useState(false);
   const serverUrl = 'http://185.25.116.133:5888';
 
   useEffect(() => {
@@ -26,21 +27,26 @@ const Index: FC = () => {
 
   const onSignInClick = async (e): Promise<void> => {
     e.preventDefault();
-    const response = await fetch(`${serverUrl}/auth/signin`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Connection: 'keep-alive',
-      },
-      body: JSON.stringify({ email, password }),
-    });
-    const json = await response.json();
-    const { userId, accessToken, refreshToken } = json;
-    Cookies.set('token', accessToken, { path: '/' });
-    Cookies.set('refreshToken', refreshToken);
-    Cookies.set('userId', userId);
-    if (response.ok) {
-      setIsLoggedIn(true);
+    try {
+      const response = await fetch(`${serverUrl}/auth/signin`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Connection: 'keep-alive',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      const json = await response.json();
+      const { userId, accessToken, refreshToken } = json;
+      Cookies.set('token', accessToken, { path: '/' });
+      Cookies.set('refreshToken', refreshToken);
+      Cookies.set('userId', userId);
+      if (response.ok) {
+        setIsLoggedIn(true);
+        setIsError(false);
+      }
+    } catch (err) {
+      setIsError(true);
     }
   };
 
@@ -54,6 +60,11 @@ const Index: FC = () => {
   return (
     <>
       <Header />
+      {isError ? (
+        <Styled.ErrorContainer>
+          <Text variant="code">{t('_error:something-wrong')}</Text>
+        </Styled.ErrorContainer>
+      ) : null}
       {isLoggedIn === undefined ? null : isLoggedIn ? (
         <Styled.FormContainer>
           <Text variant="h4">{t('user-logged-in')}</Text>
@@ -79,6 +90,7 @@ const Index: FC = () => {
               type="password"
               onChange={(value) => setPassword(value)}
             />
+            <a>{t('forgot-password')}</a>
             <Button>Sign in</Button>
           </form>
         </Styled.FormContainer>
