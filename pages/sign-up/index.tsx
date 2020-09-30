@@ -48,13 +48,13 @@ const Index: FC = () => {
       <Header />
       {isLoggedIn === undefined ? null : isLoggedIn ? (
         <Styled.FormContainer>
-          <Text variant="h5">{t('user-logged-in')}</Text>
+          <Text variant="h5" align="center">{t('user-logged-in')}</Text>
         </Styled.FormContainer>
       ) : (
         <Styled.FormContainer>
-          <Text variant="h3">{t('registration')}</Text>
+          <Styled.Title variant="h3">{t('registration')}</Styled.Title>
           {t('email')}
-          <TextInput
+          <Styled.Input
             name="email"
             placeholder="Enter email"
             // @ts-ignore
@@ -62,7 +62,7 @@ const Index: FC = () => {
             onChange={(value) => setEmail(value)}
           />
           {t('password')}
-          <TextInput
+          <Styled.Input
             name="password"
             placeholder="Enter password"
             // @ts-ignore
@@ -77,14 +77,14 @@ const Index: FC = () => {
             type="password"
             onChange={(value) => setConfirmedPassword(value)}
           />
-          <Button
+          <Styled.SignUpButton
             onClick={() => onSignUpClick()}
             isDisabled={isSignUpDisabled()}
           >
             Sign up
-          </Button>
+          </Styled.SignUpButton>
           {confirmMessage ? (
-            <Text variant="h6">{t('confirm-message')}</Text>
+            <Styled.ConfirmText variant="h6">{t('confirm-message')}</Styled.ConfirmText>
           ) : null}
         </Styled.FormContainer>
       )}
