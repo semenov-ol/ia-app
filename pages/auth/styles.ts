@@ -12,7 +12,9 @@ const Container = styled.div`
   margin-top: 5%;
 `;
 
-const Input = styled(TextInput)``;
+const Input = styled(TextInput)`
+  margin-bottom: 10px;
+`;
 
 const ResetButton = styled(Button)`
   margin-top: 20px;

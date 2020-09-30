@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import Text from 'ustudio-ui/components/Text';
-import Styled from './styles'
+import { NextPage } from 'next';
 
+import Styled from './styles';
 import Header from '../../components/header';
 
-const ForgotPassword = () => {
+const ForgotPassword: NextPage = () => {
   const serverUrl = 'http://185.25.116.133:5888';
+
   const [email, setEmail] = useState('');
   const [isSentRequest, setIsSentRequest] = useState(false);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const resetPassword = async () => {
+  const resetPassword = async (): Promise<void> => {
     try {
       const response = await fetch(`${serverUrl}/auth/forgot-password`, {
         method: 'POST',
@@ -59,7 +61,5 @@ const ForgotPassword = () => {
     </>
   );
 };
-
-
 
 export default ForgotPassword;
