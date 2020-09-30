@@ -35,6 +35,14 @@ const Index: NextPage = () => {
     return !(email !== '' && password !== '' && password === confirmedPassword);
   };
 
+  const arePasswordsIdentical = (): boolean => {
+    return (password === confirmedPassword) && (password.length === confirmedPassword.length);
+  };
+
+  const showMessage = (): boolean => {
+    return isSignUpDisabled() && !arePasswordsIdentical() && (confirmedPassword.length >= password.length);
+  };
+
   const onSignUpClick = async (e): Promise<void> => {
     e.preventDefault();
 
@@ -80,6 +88,7 @@ const Index: NextPage = () => {
       ) : (
         <Styled.FormContainer>
           <form onSubmit={(e) => onSignUpClick(e)}>
+
             <Styled.Title variant="h3" align="center">
               {t('registration')}
             </Styled.Title>
@@ -100,16 +109,24 @@ const Index: NextPage = () => {
               onChange={(value) => setPassword(value)}
             />
             {t('confirm_password')}
-            <TextInput
-              name="confirm_password"
-              placeholder="Confirm password"
-              // @ts-ignore
-              type="password"
-              onChange={(value) => setConfirmedPassword(value)}
-            />
+            <Styled.InputContainer>
+              <TextInput
+                name="confirm_password"
+                placeholder="Confirm password"
+                // @ts-ignore
+                type="password"
+                onChange={(value) => setConfirmedPassword(value)}
+              />
+              {showMessage() && (
+                <Styled.PasswordErrorMessage>
+                  The password and confirm password fields do not match.
+                </Styled.PasswordErrorMessage>
+              )}
+            </Styled.InputContainer>
             <Styled.SignUpButton isDisabled={isSignUpDisabled()}>
               {t('sign-up')}
             </Styled.SignUpButton>
+
           </form>
           {confirmMessage ? (
             <Styled.ConfirmText variant="h6">
