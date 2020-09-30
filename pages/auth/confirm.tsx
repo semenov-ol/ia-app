@@ -2,12 +2,14 @@ import React, { useEffect } from 'react';
 import Router, { useRouter } from 'next/router';
 import Text from 'ustudio-ui/components/Text';
 
-const Indexes = () => {
+import type { NextPage } from 'next';
+
+const Indexes: NextPage = () => {
   const { query } = useRouter();
   const serverUrl = 'http://185.25.116.133:5888';
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchData(): Promise<void> {
       const response = await fetch(
         `${serverUrl}/auth/confirm/?token=${query.token}`,
         {
@@ -21,6 +23,7 @@ const Indexes = () => {
         await Router.push('/');
       }
     }
+
     try {
       fetchData();
     } catch (err) {
@@ -28,32 +31,11 @@ const Indexes = () => {
     }
   }, []);
 
-  return <Text variant="h2">You will be redirect to the main page</Text>;
+  return (
+    <Text variant="h2" align="center">
+      You will be redirect to the main page
+    </Text>
+  );
 };
 
 export default Indexes;
-
-// Indexes.getInitialProps = async (ctx) => {
-//   if (ctx.req) {
-//     ctx.res.writeHead(302, { Location: '/' });
-//     ctx.res.end();
-//   } else {
-//     Router.push('/');
-//   }
-//   return {};
-// };
-
-// export async function getStaticProps({params}) {
-//   return {
-//     props: {
-//       params
-//     }
-//   }
-// }
-//
-// export async function getStaticPaths() {
-//   return {
-//     query: [{params: {id: 'value'}}],
-//     fallback: false,
-//   };
-// }

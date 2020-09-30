@@ -1,14 +1,16 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import TextInput from 'ustudio-ui/components/Input/TextInput';
 import Text from 'ustudio-ui/components/Text';
-import Button from 'ustudio-ui/components/Button';
 import Cookies from 'js-cookie';
 
-import Styled from './sign-up-page.styles';
+import type { NextPage } from 'next';
+
 import Header from '../../components/header';
 
-const Index: FC = () => {
+import Styled from './sign-up-page.styles';
+
+const Index: NextPage = () => {
   const token = Cookies.get('token');
 
   const [email, setEmail] = useState('');
@@ -35,6 +37,7 @@ const Index: FC = () => {
 
   const onSignUpClick = async (e): Promise<void> => {
     e.preventDefault();
+
     try {
       const response = await fetch(`${serverUrl}/auth/signup`, {
         method: 'POST',
@@ -43,6 +46,7 @@ const Index: FC = () => {
         },
         body: JSON.stringify({ email, password }),
       });
+
       if (response.status === 201) {
         setConfirmMessage(true);
         setIsError(false);
@@ -55,6 +59,7 @@ const Index: FC = () => {
       setIsError(true);
     }
   };
+
   return (
     <>
       <Header />
@@ -65,6 +70,7 @@ const Index: FC = () => {
           </Text>
         </Styled.ErrorContainer>
       ) : null}
+
       {isLoggedIn === undefined ? null : isLoggedIn ? (
         <Styled.FormContainer>
           <Text variant="h5" align="center">

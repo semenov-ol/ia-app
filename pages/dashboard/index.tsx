@@ -1,12 +1,14 @@
 import React from 'react';
 import Text from 'ustudio-ui/components/Text';
 import Cookies from 'js-cookie';
+import type { NextPage } from 'next';
 
-import Header from '../../components/header';
 import { handleAuthSSR } from '../../utils/auth';
+import Header from '../../components/header';
 
-const Index = () => {
+const Index: NextPage = () => {
   const userId = Cookies.get('userId');
+
   return (
     <>
       <Header />

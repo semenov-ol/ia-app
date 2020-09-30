@@ -1,14 +1,16 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Button from 'ustudio-ui/components/Button';
 import Text from 'ustudio-ui/components/Text';
-import { useTranslation } from 'react-i18next';
 import Cookies from 'js-cookie';
-import Styled from './sign-in-pages.styles';
-import Link from 'next/link';
+
+import type { NextPage } from 'next';
 
 import Header from '../../components/header';
 
-const Index: FC = () => {
+import Styled from './sign-in-pages.styles';
+
+const Index: NextPage = () => {
   const token = Cookies.get('token');
   const [isLoggedIn, setIsLoggedIn] = useState(undefined);
   const { t } = useTranslation('sign-up');
@@ -28,6 +30,7 @@ const Index: FC = () => {
 
   const onSignInClick = async (e): Promise<void> => {
     e.preventDefault();
+
     try {
       const response = await fetch(`${serverUrl}/auth/signin`, {
         method: 'POST',
@@ -84,7 +87,7 @@ const Index: FC = () => {
         </Styled.FormContainer>
       ) : (
         <Styled.FormContainer>
-          <form onSubmit={(e) => onSignInClick(e)}>
+          <form onSubmit={(e: FormEvent<HTMLFormElement>) => onSignInClick(e)}>
             <Styled.Title variant="h3" align="center">
               {t('authorization')}
             </Styled.Title>
