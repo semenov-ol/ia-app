@@ -39,10 +39,8 @@ const ConfirmText = styled(Text)`
   color: #3290f3;
 `;
 
-const PasswordErrorMessage = styled(Text)`  
+const PasswordErrorMessage = styled(Text)` 
   color: #dc3513;
-  
-  font-size: 0.9em;
 `;
 
 const InputContainer = styled.div`

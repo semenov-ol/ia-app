@@ -118,7 +118,7 @@ const Index: NextPage = () => {
                 onChange={(value) => setConfirmedPassword(value)}
               />
               {showMessage() && (
-                <Styled.PasswordErrorMessage>
+                <Styled.PasswordErrorMessage variant="small" >
                   The password and confirm password fields do not match.
                 </Styled.PasswordErrorMessage>
               )}
