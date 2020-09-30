@@ -8,5 +8,7 @@
   "user-logged-in": "Ви ввійшли в систему",
   "forgot-password": "Забули пароль",
   "sign-up": "Зареєструватися",
-  "sign-in": "Увійти"
+  "sign-in": "Увійти",
+  "new-password": "Новый Пароль:",
+  "confirm": "Підтвердити"
 }

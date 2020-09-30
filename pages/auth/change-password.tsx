@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'react-i18next';
 import { NextPage } from 'next';
 import Text from 'ustudio-ui/components/Text';
 import Styled from './styles';
@@ -8,6 +9,7 @@ import Header from '../../components/header';
 const ChangePassword: NextPage = () => {
   const serverUrl = 'http://185.25.116.133:5888';
   const router = useRouter();
+  const { t } = useTranslation('sign-up');
   const { token } = router?.query;
 
   const [password, setPassword] = useState('');
@@ -52,18 +54,18 @@ const ChangePassword: NextPage = () => {
       )}
       <Styled.Container>
         <form onSubmit={(e) => onSubmitHandle(e)}>
-          New Password:
+          {t('new-password')}
           <Styled.Input
             placeholder="Enter new password"
             onChange={(value) => setPassword(value)}
           />
-          Confirm password:
+          {t('confirm_password')}
           <Styled.Input
             placeholder="Confirm new password"
             onChange={(value) => setConfirmedPassword(value)}
           />
           <Styled.ResetButton isDisabled={isButtonDisabled()}>
-            Confirm
+            {t('confirm')}
           </Styled.ResetButton>
         </form>
       </Styled.Container>

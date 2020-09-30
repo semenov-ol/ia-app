@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import Text from 'ustudio-ui/components/Text';
 import { NextPage } from 'next';
+import { useTranslation } from 'react-i18next';
 
 import Styled from './styles';
 import Header from '../../components/header';
 
 const ForgotPassword: NextPage = () => {
   const serverUrl = 'http://185.25.116.133:5888';
+
+  const { t } = useTranslation('sign-up');
 
   const [email, setEmail] = useState('');
   const [isSentRequest, setIsSentRequest] = useState(false);
@@ -44,18 +47,18 @@ const ForgotPassword: NextPage = () => {
         </Styled.ErrorContainer>
       )}
       <Styled.Container>
-        Email:
+        {t('email')}
         <Styled.Input
-          placeholder="Enter email"
+          placeholder={t('email')}
           onChange={(value) => setEmail(value)}
         />
         {isSentRequest && (
           <Styled.ConfirmMessage variant="article">
-            Confirmation with reset link was sent on email
+            {t('confirm-message')}
           </Styled.ConfirmMessage>
         )}
         <Styled.ResetButton onClick={() => resetPassword()}>
-          Send confirm on email
+          {t('confirm')}
         </Styled.ResetButton>
       </Styled.Container>
     </>
