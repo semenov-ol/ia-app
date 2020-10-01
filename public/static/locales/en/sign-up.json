@@ -10,5 +10,6 @@
   "sign-up": "Sign up",
   "sign-in": "Sign in",
   "new-password": "New Password:",
-  "confirm": "Confirm"
+  "confirm": "Confirm",
+  "password!=confirm": "The password and confirm password fields do not match."
 }

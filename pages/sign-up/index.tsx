@@ -36,11 +36,18 @@ const Index: NextPage = () => {
   };
 
   const arePasswordsIdentical = (): boolean => {
-    return (password === confirmedPassword) && (password.length === confirmedPassword.length);
+    return (
+      password === confirmedPassword &&
+      password.length === confirmedPassword.length
+    );
   };
 
   const showMessage = (): boolean => {
-    return isSignUpDisabled() && !arePasswordsIdentical() && (confirmedPassword.length >= password.length);
+    return (
+      isSignUpDisabled() &&
+      !arePasswordsIdentical() &&
+      confirmedPassword.length >= password.length
+    );
   };
 
   const onSignUpClick = async (e): Promise<void> => {
@@ -54,7 +61,7 @@ const Index: NextPage = () => {
         },
         body: JSON.stringify({ email, password }),
       });
-
+      const json = await response.json();
       if (response.status === 201) {
         setConfirmMessage(true);
         setIsError(false);
@@ -64,13 +71,70 @@ const Index: NextPage = () => {
           'confirm_password'
         ) as HTMLInputElement).value = '';
       } else {
-        setErrorText(response.statusText);
+        setErrorText(json.message);
         setIsError(true);
       }
     } catch (err) {
       setErrorText(err.statusText);
       setIsError(true);
     }
+  };
+
+  const isLoggedInFunc = () => {
+    return isLoggedIn ? (
+      <Styled.FormContainer>
+        <Text variant="h5" align="center">
+          {t('user-logged-in')}
+        </Text>
+      </Styled.FormContainer>
+    ) : (
+      <Styled.FormContainer>
+        <form onSubmit={(e) => onSignUpClick(e)}>
+          <Styled.Title variant="h3" align="center">
+            {t('registration')}
+          </Styled.Title>
+          {t('email')}
+          <Styled.Input
+            id="email"
+            placeholder="Enter email"
+            // @ts-ignore
+            type="email"
+            onChange={(value) => setEmail(value)}
+          />
+          {t('password')}
+          <Styled.Input
+            id="password"
+            placeholder="Enter password"
+            // @ts-ignore
+            type="password"
+            onChange={(value) => setPassword(value)}
+          />
+          {t('confirm_password')}
+          <Styled.InputContainer>
+            <TextInput
+              id="confirm_password"
+              placeholder="Confirm password"
+              // @ts-ignore
+              type="password"
+              onChange={(value) => setConfirmedPassword(value)}
+            />
+            {showMessage() && (
+              <Styled.PasswordErrorMessage variant="small">
+                {t('password!=confirm')}
+              </Styled.PasswordErrorMessage>
+            )}
+          </Styled.InputContainer>
+          <Styled.SignUpButton isDisabled={isSignUpDisabled()}>
+            {t('sign-up')}
+          </Styled.SignUpButton>
+        </form>
+        {confirmMessage ? (
+          <Styled.ConfirmText variant="h6">
+            {t('confirm-message')}
+          </Styled.ConfirmText>
+        ) : null}
+      </Styled.FormContainer>
+    );
   };
 
   return (
@@ -84,60 +148,7 @@ const Index: NextPage = () => {
         </Styled.ErrorContainer>
       ) : null}
 
-      {isLoggedIn === undefined ? null : isLoggedIn ? (
-        <Styled.FormContainer>
-          <Text variant="h5" align="center">
-            {t('user-logged-in')}
-          </Text>
-        </Styled.FormContainer>
-      ) : (
-        <Styled.FormContainer>
-          <form onSubmit={(e) => onSignUpClick(e)}>
-            <Styled.Title variant="h3" align="center">
-              {t('registration')}
-            </Styled.Title>
-            {t('email')}
-            <Styled.Input
-              id="email"
-              placeholder="Enter email"
-              // @ts-ignore
-              type="email"
-              onChange={(value) => setEmail(value)}
-            />
-            {t('password')}
-            <Styled.Input
-              id="password"
-              placeholder="Enter password"
-              // @ts-ignore
-              type="password"
-              onChange={(value) => setPassword(value)}
-            />
-            {t('confirm_password')}
-            <Styled.InputContainer>
-              <TextInput
-                id="confirm_password"
-                placeholder="Confirm password"
-                // @ts-ignore
-                type="password"
-                onChange={(value) => setConfirmedPassword(value)}
-              />
-              {showMessage() && (
-                <Styled.PasswordErrorMessage variant="small" >
-                  The password and confirm password fields do not match.
-                </Styled.PasswordErrorMessage>
-              )}
-            </Styled.InputContainer>
-            <Styled.SignUpButton isDisabled={isSignUpDisabled()}>
-              {t('sign-up')}
-            </Styled.SignUpButton>
-          </form>
-          {confirmMessage ? (
-            <Styled.ConfirmText variant="h6">
-              {t('confirm-message')}
-            </Styled.ConfirmText>
-          ) : null}
-        </Styled.FormContainer>
-      )}
+      {isLoggedIn === undefined ? null : isLoggedInFunc()}
     </>
   );
 };
